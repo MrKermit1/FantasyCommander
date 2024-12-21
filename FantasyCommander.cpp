@@ -4,11 +4,13 @@
 #include <iostream>
 #include <random>
 #include <cmath>
+#include <stdlib.h>
+#include <malloc.h>
+
+#define MAX_SIZE 16382
 
 constexpr int SCREEN_WIDTH = 1200;
 constexpr int SCREEN_HEIGHT = 800;
-
-
 Terrain::Type map[64][48];
 
 float RandomNumber(int min, int max)
@@ -29,7 +31,7 @@ bool CheckTerrain(int x, int y, Terrain::Type type)
         map[x + 1][y + 1] == type;
 }
 
-void GenerateTerrain(Terrain::Type type, int ammount)
+void GenerateRootWorld()
 {
     for (int i = 0; i < 64; i++)
     {
@@ -38,22 +40,21 @@ void GenerateTerrain(Terrain::Type type, int ammount)
             map[i][j] = Terrain::GRASS;
         }
     }
+}
 
+void GenerateTerrainElements(Terrain::Type type, int ammount)
+{
     //generate forest
-    float x = RandomNumber(0, SCREEN_WIDTH - (SCREEN_WIDTH / 25));
-    float y = RandomNumber(0, SCREEN_HEIGHT - (SCREEN_WIDTH / 25));
+    float x = RandomNumber(0, 64 * 25);
+    float y = RandomNumber(0, 48 * 25);
 
     for (int i = 0; i < ammount; i++)
     {
         int xx = ceil(x / 25);
         int yy = ceil(y / 25);
 
-        if (CheckTerrain(xx, yy, Terrain::FOREST))
-        {
-            x = RandomNumber(0, SCREEN_WIDTH - (SCREEN_WIDTH / 25));
-            y = RandomNumber(0, SCREEN_HEIGHT - (SCREEN_HEIGHT / 25));
-        }
-        else
+        //if there is grass - you can put terrain
+        if (CheckTerrain(xx, yy, Terrain::GRASS))
         {
             map[xx][yy] = type;
             map[xx + 1][yy] = type;
@@ -62,28 +63,32 @@ void GenerateTerrain(Terrain::Type type, int ammount)
         }
 
         //regenarte new random nums
-        x = RandomNumber(0, SCREEN_WIDTH - (SCREEN_WIDTH / 25));
-        y = RandomNumber(0, SCREEN_HEIGHT - (SCREEN_WIDTH / 25));
+        x = RandomNumber(0, SCREEN_WIDTH + (SCREEN_WIDTH / 25));
+        y = RandomNumber(0, SCREEN_HEIGHT + (SCREEN_WIDTH / 25));
     }
 }
 
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Test");
-    GenerateTerrain(Terrain::FOREST, 70);
+    SetTargetFPS(144);
+    GenerateRootWorld();
+    GenerateTerrainElements(Terrain::FOREST, 70);
+    GenerateTerrainElements(Terrain::STONE, 20);
 
     World world = World(map, "test");
-
-
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
 
-        ClearBackground(DARKGREEN);
+        ClearBackground(BLACK);
+
         world.Draw();
         world.Move();
 
         EndDrawing();
     }
+
+    return 0;
 }
