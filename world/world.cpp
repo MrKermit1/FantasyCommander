@@ -19,10 +19,16 @@ void World::InitMap(Terrain::Type mapBuffer[64][48])
 {
 	for (int i = 0; i < 64; i++)
 	{
+		mapPointer[i] = new Terrain[48];
+	}
+
+	for (int i = 0; i < 64; i++)
+	{
 		for (int j = 0; j < 48; j++)
 		{
 			//map[i][j] = mapBuffer[i][j];
-			map[i][j] = Terrain(mapBuffer[i][j], Vector2{ i * 25.0f,  j * 25.0f });
+			//map[i][j] = Terrain(mapBuffer[i][j], Vector2{ i * 25.0f,  j * 25.0f });
+			mapPointer[i][j] = Terrain(mapBuffer[i][j], Vector2{ i * 25.0f,  j * 25.0f });
 		}
 	}
 }
@@ -35,7 +41,8 @@ void World::Draw()
 	{
 		for (int j = 0; j < 48; j++)
 		{
-			map[i][j].Draw();
+			//map[i][j].Draw();
+			mapPointer[i][j].Draw();
 		}
 	}
 
@@ -44,7 +51,7 @@ void World::Draw()
 
 void World::Move()
 {
-	float speed = 3.0f;
+	float speed = 10.0f;
 
 	if (IsKeyDown(KEY_UP))
 	{

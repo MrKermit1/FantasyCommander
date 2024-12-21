@@ -8,7 +8,8 @@ class World
 {
 private:
 	std::string name;
-	Terrain map[64][48];
+	//Terrain map[64][48];
+	Terrain** mapPointer = new Terrain*[64];
 	Camera2D camera;
 
 	void InitMap(Terrain::Type mapBuffer[64][48]);
