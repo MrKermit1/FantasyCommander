@@ -1,13 +1,14 @@
 #include "world.h"
-
+#include"../creatures/creature.h"
 World::World()
 {
 }
 
-World::World(Terrain::Type worldMap[64][48], std::string worldName)
+World::World(Terrain::Type worldMap[64][48], std::string worldName, std::vector<Creature> creatures)
 {
 	InitMap(worldMap);
-	this->name = worldName;
+	name = worldName;
+	this->creatures = creatures;
 	camera = { 0 };
 	camera.target = Vector2{ 0.0f, 0.0f };
 	camera.offset = { 0.0f, 0.0f };
@@ -43,7 +44,13 @@ void World::Draw()
 		{
 			//map[i][j].Draw();
 			mapPointer[i][j].Draw();
+			mapPointer[i][j].OnClick();
 		}
+	}
+
+	for (auto it = creatures.begin(); it != creatures.end(); it++)
+	{
+		it->Draw();
 	}
 
 	EndMode2D();
@@ -73,5 +80,5 @@ void World::Move()
 		camera.target.x -= speed;
 	}
 
-	camera.zoom += GetMouseWheelMove() * speed / 2.0f;
+	camera.zoom += GetMouseWheelMove() * speed / 100.0f;
 }

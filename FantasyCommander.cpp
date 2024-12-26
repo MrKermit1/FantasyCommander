@@ -1,23 +1,22 @@
 ﻿#include <raylib.h>
 #include "world/world.h"
 #include "world/terrain.h"
+#include "creatures/creature.h"
 #include <iostream>
 #include <random>
 #include <cmath>
-#include <stdlib.h>
-#include <malloc.h>
-
-#define MAX_SIZE 16382
-
+#include <vector>
 constexpr int SCREEN_WIDTH = 1200;
 constexpr int SCREEN_HEIGHT = 800;
+
 Terrain::Type map[64][48];
+std::vector<Creature> creatures = {};
 
 float RandomNumber(int min, int max)
 {
     std::random_device dev;
     std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(min, max); // distribution in range [x, y]
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(min, max); // przedział losowania [x, y]
 
     return dist6(rng);
 }
@@ -44,7 +43,7 @@ void GenerateRootWorld()
 
 void GenerateTerrainElements(Terrain::Type type, int ammount)
 {
-    //generate forest
+    //generuj las
     float x = RandomNumber(0, 64 * 25);
     float y = RandomNumber(0, 48 * 25);
 
@@ -53,7 +52,7 @@ void GenerateTerrainElements(Terrain::Type type, int ammount)
         int xx = ceil(x / 25);
         int yy = ceil(y / 25);
 
-        //if there is grass - you can put terrain
+        //jeślij teren to trawa to wstawiaj se co chcesz
         if (CheckTerrain(xx, yy, Terrain::GRASS))
         {
             map[xx][yy] = type;
@@ -62,21 +61,28 @@ void GenerateTerrainElements(Terrain::Type type, int ammount)
             map[xx + 1][yy + 1] = type;
         }
 
-        //regenarte new random nums
+        //ponowne losowanie (napisac wrapera do tego???)
         x = RandomNumber(0, SCREEN_WIDTH + (SCREEN_WIDTH / 25));
         y = RandomNumber(0, SCREEN_HEIGHT + (SCREEN_WIDTH / 25));
     }
+}
+
+void UI()
+{
+    DrawRectangle(0, SCREEN_HEIGHT - 100, SCREEN_WIDTH, 100, GRAY);
 }
 
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Test");
     SetTargetFPS(144);
+
     GenerateRootWorld();
     GenerateTerrainElements(Terrain::FOREST, 70);
     GenerateTerrainElements(Terrain::STONE, 20);
-
-    World world = World(map, "test");
+    Creature orc = Creature(Vector2{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, Creature::WORKER, Creature::ORC, 0, 0, 0, "sd");
+    creatures.push_back(orc);
+    World world = World(map, "test", creatures);
 
     while (!WindowShouldClose())
     {
@@ -84,7 +90,11 @@ int main()
 
         ClearBackground(BLACK);
 
+        //RENDER
         world.Draw();
+        UI();
+
+
         world.Move();
 
         EndDrawing();

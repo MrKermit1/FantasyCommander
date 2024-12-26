@@ -17,5 +17,6 @@ public:
 
 	Terrain(Terrain::Type terrainType, Vector2 pos);
 	void Draw();
+	void OnClick();
 };
 

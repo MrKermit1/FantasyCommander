@@ -127,11 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="buildings\building.cpp" />
+    <ClCompile Include="creatures\creature.cpp" />
     <ClCompile Include="FantasyCommander.cpp" />
+    <ClCompile Include="resources\resource.cpp" />
     <ClCompile Include="world\terrain.cpp" />
     <ClCompile Include="world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buildings\building.h" />
+    <ClInclude Include="creatures\creature.h" />
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="world\terrain.h" />
     <ClInclude Include="world\world.h" />
   </ItemGroup>
