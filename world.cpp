@@ -1,8 +1,21 @@
 #include "world.h"
 #include <random>
+#include <iostream>
 
 World::World()
 {
+    map = new TerrainNode* [64];
+    for (int i = 0; i < 64; i++)
+    {
+        map[i] = new TerrainNode[48];
+    }
+
+    camera = { 0 };
+    camera.target = Vector2{ 0.0f, 0.0f };
+    camera.offset = { 0.0f, 0.0f };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
+
     GenerateWorld();
     GenerateTerrain(TerrainNode::STONE ,20);
     GenerateTerrain(TerrainNode::FOREST ,20);
@@ -65,6 +78,7 @@ bool World::CheckTerrain(int x, int y, TerrainNode::TerrainType type)
 
 void World::Draw()
 {
+    BeginMode2D(camera);
     for (int i = 0; i < 64; i++)
     {
         for (int j = 0; j < 48; j++)
@@ -72,5 +86,43 @@ void World::Draw()
             map[i][j].Draw();
         }
     }
+    EndMode2D();
+}
+
+void World::Update()
+{
+    for (int i = 0; i < 64; i++)
+    {
+        for (int j = 0; j < 48; j++)
+        {
+            map[i][j].OnClick(&camera);
+        }
+    }
+}
+
+void World::Move()
+{
+    float speed = 10;
+    if (IsKeyDown(KEY_W))
+    {
+        camera.target.y -= speed;
+    }
+
+    if (IsKeyDown(KEY_S))
+    {
+        camera.target.y += speed;
+    }
+
+    if (IsKeyDown(KEY_D))
+    {
+        camera.target.x += speed;
+    }
+
+    if (IsKeyDown(KEY_A))
+    {
+        camera.target.x -= speed;
+    }
+
+    camera.zoom += GetMouseWheelMove() * speed / 100.0f;
 }
     

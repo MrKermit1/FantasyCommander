@@ -7,8 +7,10 @@ public:
 	World();
 	void Draw();
 	void Update();
+	void Move();
 private:
-	TerrainNode map[64][48];
+	TerrainNode** map;
+	Camera2D camera;
 	void GenerateWorld();
 	void GenerateTerrain(TerrainNode::TerrainType type, int ammount);
 	float RandomNumber(int min, int max);
