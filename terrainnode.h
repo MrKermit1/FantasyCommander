@@ -14,7 +14,7 @@ public:
 	int fCost();
 	TerrainType GetType();
 	void SetType(TerrainType type);
-
+	Vector2 OnClick(Camera2D* camera);
 	void Draw();
 private:
 	Vector2 position;
@@ -22,7 +22,7 @@ private:
 	int gCost;
 	int hCost;
 	TerrainType type;
-
+	bool clicked;
 	void SwitchTexture();
 };
 

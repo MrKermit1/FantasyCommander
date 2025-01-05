@@ -1,5 +1,5 @@
 #include "terrainnode.h"
-
+#include <iostream>
 TerrainNode::TerrainNode()
 {
 }
@@ -28,9 +28,34 @@ void TerrainNode::SetType(TerrainType type)
     SwitchTexture();
 }
 
+Vector2 TerrainNode::OnClick(Camera2D *camera)
+{
+    Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *camera);
+
+    if 
+    (
+        IsMouseButtonPressed(MOUSE_BUTTON_LEFT) 
+        && mousePosition.x >= position.x
+        && !(mousePosition.x > position.x+25)
+        && mousePosition.y >= position.y
+        && !(mousePosition.y > position.y + 25)
+    )
+    {
+        std::cout << "x:" << position.x << " y:" << position.y << "\n";
+        clicked = !clicked;
+        return position;
+    }
+}
+
 void TerrainNode::Draw()
 {
     DrawTextureV(texture, position, WHITE);
+    if (clicked)
+    {
+        //Draw cross
+        DrawLineV(position, {position.x+25, position.y+25}, RED);
+        DrawLineV({ position.x + 25, position.y + 25 }, position, RED);
+    }
 }
 
 void TerrainNode::SwitchTexture()
