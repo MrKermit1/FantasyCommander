@@ -12,9 +12,12 @@ public:
 	TerrainNode();
 	TerrainNode(Vector2 pos, TerrainNode::TerrainType type);
 	int fCost();
+	bool IsClicked();
 	TerrainType GetType();
-	void SetType(TerrainType type);
+	bool operator==(const TerrainNode& other) const;
 	Vector2 OnClick(Camera2D* camera);
+	void SetType(TerrainType type);
+	void UnClick();
 	void Draw();
 private:
 	Vector2 position;
@@ -23,6 +26,7 @@ private:
 	int hCost;
 	TerrainType type;
 	bool clicked;
+
 	void SwitchTexture();
 };
 

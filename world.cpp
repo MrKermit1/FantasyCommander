@@ -1,7 +1,7 @@
 #include "world.h"
 #include <random>
 #include <iostream>
-
+#include "creature.h"
 World::World()
 {
     map = new TerrainNode* [64];
@@ -17,8 +17,8 @@ World::World()
     camera.zoom = 1.0f;
 
     GenerateWorld();
-    GenerateTerrain(TerrainNode::STONE ,20);
-    GenerateTerrain(TerrainNode::FOREST ,20);
+    GenerateTerrain(TerrainNode::STONE ,100);
+    GenerateTerrain(TerrainNode::FOREST ,100);
 }
 
 
@@ -47,14 +47,33 @@ void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
         if (CheckTerrain(xx, yy, TerrainNode::GRASS))
         {
             map[xx][yy].SetType(type);
-            map[xx + 1][yy].SetType(type);
+            /*map[xx + 1][yy].SetType(type);
             map[xx][yy + 1].SetType(type);
-            map[xx + 1][yy + 1].SetType(type);
+            map[xx + 1][yy + 1].SetType(type);*/
         }
 
         x = RandomNumber(0, GetScreenWidth() + (GetScreenWidth() / 25));
         y = RandomNumber(0, GetScreenHeight() + (GetScreenWidth() / 25));
     }
+}
+
+void World::UnClickUnusedNodes(TerrainNode node)
+{
+    for (int i = 0; i < 64; i++)
+    {
+        for (int j = 0; j < 48; j++)
+        {
+            if (!(map[i][j] == node))
+            {
+                map[i][j].UnClick();
+            }
+        }
+    }
+}
+
+void World::UpdateCreatures(Creature creature)
+{
+    creatures.push_back(creature);
 }
 
 float World::RandomNumber(int min, int max)
@@ -86,6 +105,7 @@ void World::Draw()
             map[i][j].Draw();
         }
     }
+
     EndMode2D();
 }
 
@@ -96,6 +116,10 @@ void World::Update()
         for (int j = 0; j < 48; j++)
         {
             map[i][j].OnClick(&camera);
+            if (map[i][j].IsClicked())
+            {
+                UnClickUnusedNodes(map[i][j]);
+            }
         }
     }
 }

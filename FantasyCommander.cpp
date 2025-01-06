@@ -1,10 +1,10 @@
 #include <iostream>
+#include <vector>
 #include "raylib.h"
 #include "world.h"
+
 const int SCREEN_WIDTH = 1200;
 const int SCREEN_HEIGHT = 800;
-
-
 
 void UI()
 {
@@ -15,7 +15,11 @@ int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Fantasy Commander");
     SetTargetFPS(60);
+
+    Creature c = Creature({ 120.0f, 100.0f }, Creature::WARRIOR, Creature::DWARF);
+
     World world = World();
+    world.UpdateCreatures(c);
     while (!WindowShouldClose())
     {
         BeginDrawing();

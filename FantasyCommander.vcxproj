@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="creature.cpp" />
     <ClCompile Include="FantasyCommander.cpp" />
     <ClCompile Include="terrainnode.cpp" />
     <ClCompile Include="world.cpp" />
@@ -135,6 +136,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="creature.h" />
     <ClInclude Include="terrainnode.h" />
     <ClInclude Include="vectorexpansion.h" />
     <ClInclude Include="world.h" />
