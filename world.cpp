@@ -47,9 +47,9 @@ void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
         if (CheckTerrain(xx, yy, TerrainNode::GRASS))
         {
             map[xx][yy].SetType(type);
-            /*map[xx + 1][yy].SetType(type);
+            map[xx + 1][yy].SetType(type);
             map[xx][yy + 1].SetType(type);
-            map[xx + 1][yy + 1].SetType(type);*/
+            map[xx + 1][yy + 1].SetType(type);
         }
 
         x = RandomNumber(0, GetScreenWidth() + (GetScreenWidth() / 25));
