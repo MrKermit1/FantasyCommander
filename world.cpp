@@ -35,25 +35,30 @@ void World::GenerateWorld()
 
 void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
 {
-    float x = RandomNumber(0, 64 * 25);
-    float y = RandomNumber(0, 48 * 25);
+    int x = RandomNumber(0, 62);
+    int y = RandomNumber(0,  47);
 
     for (int i = 0; i < ammount; i++)
     {
-        int xx = ceil(x / 25);
-        int yy = ceil(y / 25);
-
         //if terrain is a grass, we can put there any other terrain
-        if (CheckTerrain(xx, yy, TerrainNode::GRASS))
+        /*if (CheckTerrain(x, y, TerrainNode::GRASS))
         {
-            map[xx][yy].SetType(type);
-            map[xx + 1][yy].SetType(type);
-            map[xx][yy + 1].SetType(type);
-            map[xx + 1][yy + 1].SetType(type);
+            map[x][y].SetType(type);
+            map[x + 1][y].SetType(type);
+            map[x][y + 1].SetType(type);
+            map[x + 1][y + 1].SetType(type);
+        }*/
+
+        while (!(CheckTerrain(x, y, TerrainNode::GRASS)))
+        {
+            x = RandomNumber(0, 62);
+            y = RandomNumber(0, 47);
         }
 
-        x = RandomNumber(0, GetScreenWidth() + (GetScreenWidth() / 25));
-        y = RandomNumber(0, GetScreenHeight() + (GetScreenWidth() / 25));
+        map[x][y].SetType(type);
+        map[x + 1][y].SetType(type);
+        map[x][y + 1].SetType(type);
+        map[x + 1][y + 1].SetType(type);
     }
 }
 
@@ -76,7 +81,7 @@ void World::UpdateCreatures(Creature creature)
     creatures.push_back(creature);
 }
 
-float World::RandomNumber(int min, int max)
+int World::RandomNumber(int min, int max)
 {
     std::random_device dev;
     std::mt19937 rng(dev());

@@ -18,7 +18,7 @@ private:
 	void GenerateWorld();
 	void GenerateTerrain(TerrainNode::TerrainType type, int ammount);
 	void UnClickUnusedNodes(TerrainNode node);
-	float RandomNumber(int min, int max);
+	int RandomNumber(int min, int max);
 	bool CheckTerrain(int x, int y, TerrainNode::TerrainType type);
 };
 
