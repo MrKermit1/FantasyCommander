@@ -40,7 +40,7 @@ void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
 
     for (int i = 0; i < ammount; i++)
     {
-        //if terrain is a grass, we can put there any other terrain
+        
         /*if (CheckTerrain(x, y, TerrainNode::GRASS))
         {
             map[x][y].SetType(type);
