@@ -12,7 +12,7 @@ Creature::Creature(Vector2 pos, Creature::Profession proffesion, Creature::Race 
 	clicked = false;
 	AssignRace();
 	AssignProffesion();
-
+	speed = 5.0f;
 	texture.width = 25;
 	texture.height = 25;
 }
@@ -23,12 +23,12 @@ bool Creature::IsClicked()
 }
 
 void Creature::Draw()
-{
-	DrawTextureV(texture, position, WHITE);
+{	
 	if (clicked)
 	{
-		DrawCircleLines(position.x + 12.5f, position.y, 25.0f, BLUE);
+		DrawCircle(position.x + 15, position.y + 15, 15.0f, BLUE);
 	}
+	DrawTextureV(texture, position, WHITE);
 }
 
 void Creature::OnClick(Camera2D* camera)
@@ -36,7 +36,7 @@ void Creature::OnClick(Camera2D* camera)
 	Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *camera);
 	if
 		(
-			IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)
+			IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
 			&& mousePosition.x >= position.x
 			&& !(mousePosition.x > position.x + 25)
 			&& mousePosition.y >= position.y
@@ -44,6 +44,7 @@ void Creature::OnClick(Camera2D* camera)
 			)
 	{
 		clicked = !clicked;
+		std::cout << clicked << "\n";
 	}
 }
 
@@ -80,6 +81,7 @@ void Creature::AssignRace()
 		break;
 	case Creature::DWARF:
 		racePath = "assets/creatures/dwarfs/";
+
 		break;
 	default:
 		break;

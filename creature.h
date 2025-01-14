@@ -30,7 +30,7 @@ private:
 	Texture2D texture;
 	bool clicked;
 	std::string racePath;
-
+	float speed;
 	void AssignProffesion();
 	void AssignRace();
 };
