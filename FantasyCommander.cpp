@@ -24,7 +24,7 @@ int main()
     {
         BeginDrawing();
         //DRAWING
-        ClearBackground(BLACK);
+        ClearBackground(DARKGREEN);
         world.Draw();
         UI();
         //CATCHING EVENTS AND GENERALLY UPDATE THINGS
