@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="FantasyCommander.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="terrainnode.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="creature.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="terrainnode.h" />
     <ClInclude Include="vectorexpansion.h" />
     <ClInclude Include="world.h" />
