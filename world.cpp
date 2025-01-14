@@ -17,7 +17,7 @@ World::World()
     camera.zoom = 1.0f;
 
     GenerateWorld();
-    GenerateTerrain(TerrainNode::STONE ,100);
+    GenerateTerrain(TerrainNode::STONE ,30);
     GenerateTerrain(TerrainNode::FOREST ,100);
 }
 
@@ -111,6 +111,11 @@ void World::Draw()
         }
     }
 
+    for (auto& c : creatures)
+    {
+        c.Draw();
+    }
+
     EndMode2D();
 }
 
@@ -127,6 +132,12 @@ void World::Update()
             }
         }
     }
+
+    for (auto& c : creatures)
+    {
+        c.OnClick(&camera);
+    }
+
 }
 
 void World::Move()
