@@ -8,7 +8,7 @@ TerrainNode::TerrainNode(Vector2 pos, TerrainNode::TerrainType type)
 {
     position = pos;
     this->type = type;
-
+    walkable = false;
     SwitchTexture();
 }
 
@@ -20,6 +20,11 @@ int TerrainNode::fCost()
 bool TerrainNode::IsClicked()
 {
     return clicked;
+}
+
+bool TerrainNode::IsWalkable()
+{
+    return walkable;
 }
 
 bool TerrainNode::operator==(const TerrainNode& other) const
@@ -40,6 +45,11 @@ void TerrainNode::SetType(TerrainType type)
     SwitchTexture();
 }
 
+void TerrainNode::SetPosition(Vector2 pos)
+{
+    position = pos;
+}
+
 Vector2 TerrainNode::OnClick(Camera2D *camera)
 {
     Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *camera);
@@ -53,10 +63,12 @@ Vector2 TerrainNode::OnClick(Camera2D *camera)
         && !(mousePosition.y > position.y + 25)
     )
     {
-        std::cout << "x:" << position.x << " y:" << position.y << "\n";
+        std::cout << "NODE:     x:" << position.x << " y:" << position.y << "\n";
         clicked = !clicked;
         return position;
     }
+
+    return position;
 }
 
 void TerrainNode::UnClick()
@@ -77,10 +89,12 @@ void TerrainNode::Draw()
 
 void TerrainNode::SwitchTexture()
 {
+
     switch (type)
     {
     case TerrainNode::GRASS:
         texture = LoadTexture("assets/terrain/grass.png");
+		walkable = true;
         break;
     case TerrainNode::FOREST:
         texture = LoadTexture("assets/terrain/forest.png");
@@ -91,4 +105,9 @@ void TerrainNode::SwitchTexture()
     default:
         break;
     }
+}
+
+Vector2 TerrainNode::GetPosition()
+{
+	return position;
 }
