@@ -4,10 +4,13 @@
 class Player
 {
 public:
+	Player();
+
 	int getWood();
 	int getStone();
 	int getIron();
 	int getMoney();
+	std::vector<Creature> getCreatures();
 
 	void AddToMoney(int n);
 	void AddToWood(int n);
