@@ -1,19 +1,18 @@
 #pragma once
 #include <vector>
-#include "creature.h"
+
 class Player
 {
 public:
 	Player();
 
-	int getWood();
-	int getStone();
-	int getIron();
-	int getMoney();
-	std::vector<Creature> getCreatures();
+	int GetWood();
+	int GetStone();
+	int GetIron();
+	int GetMoney();
 
 	void AddToMoney(int n);
-	void AddToWood(int n);
+	void AddToWood(int n);	
 	void AddToStone(int n);
 	void AddToIron(int n);
 
@@ -22,7 +21,5 @@ private:
 	int wood;
 	int stone;
 	int iron;
-
-	std::vector<Creature> creatures;
 };
 

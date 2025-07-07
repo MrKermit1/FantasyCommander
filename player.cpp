@@ -8,29 +8,24 @@ Player::Player()
 	money = 100;
 }
 
-int Player::getWood()
+int Player::GetWood()
 {
 	return wood;
 }
 
-int Player::getStone()
+int Player::GetStone()
 {
 	return stone;
 }
 
-int Player::getIron()
+int Player::GetIron()
 {
 	return iron;
 }
 
-int Player::getMoney()
+int Player::GetMoney()
 {
 	return money;
-}
-
-std::vector<Creature> Player::getCreatures()
-{
-	return creatures;
 }
 
 void Player::AddToMoney(int n)
@@ -52,3 +47,4 @@ void Player::AddToIron(int n)
 {
 	iron += n;
 }
+
