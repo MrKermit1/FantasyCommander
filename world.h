@@ -8,20 +8,19 @@ class World
 {
 public:
 	World();
-
+	World(Player* player);
 	std::vector<Vector2> FindPath(Vector2 startPos, Vector2 targetPos);
 
 	void Draw();
 	void Update();
 	void Move();
-	void UpdateCreatures(Creature creature);
+	void AddCreature(Creature creature);
 private:
 	int RandomNumber(int min, int max);
 	bool CheckTerrain(int x, int y, TerrainNode::TerrainType type);
-
+	Player* player;
 	TerrainNode** map;
 	Camera2D camera;
-	Player player;
 	Vector2 FindNearestWalkableNode(Vector2 startPos);
 	std::vector<Creature> playerCreatures;
 

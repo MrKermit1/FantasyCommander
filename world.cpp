@@ -2,6 +2,7 @@
 #include <random>
 #include <iostream>
 #include "creature.h"
+#include "player.h"
 #include <queue>
 #include <map>
 
@@ -24,6 +25,26 @@ World::World()
     GenerateTerrain(TerrainNode::FOREST ,100);
 }
 
+World::World(Player* player)
+{
+    map = new TerrainNode * [64];
+    for (int i = 0; i < 64; i++)
+    {
+        map[i] = new TerrainNode[48];
+    }
+
+    camera = { 0 };
+    camera.target = Vector2{ 0.0f, 0.0f };
+    camera.offset = { 0.0f, 0.0f };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
+
+    GenerateWorld();
+    GenerateTerrain(TerrainNode::STONE, 30);
+    GenerateTerrain(TerrainNode::FOREST, 100);
+	this->player = player;
+}
+
 std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
 {
     struct Node
@@ -33,7 +54,9 @@ std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
         float priority;
     };
 
+	//Priority queue to store nodes based on their priority(cost + heuristic)
     auto cmp = [](Node left, Node right) { return left.priority > right.priority; };
+	// Using a priority queue to implement the frontier
     std::priority_queue<Node, std::vector<Node>, decltype(cmp)> frontier(cmp);
 
     std::map<std::pair<int, int>, Vector2> cameFrom;
@@ -41,9 +64,9 @@ std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
 
     auto gridPos = [](Vector2 pos) { return std::make_pair((int)(pos.x / 25), (int)(pos.y / 25)); };
     auto heuristic = [](Vector2 a, Vector2 b)
-        {
-            return fabs(a.x - b.x) + fabs(a.y - b.y);
-        };
+    {
+        return fabs(a.x - b.x) + fabs(a.y - b.y);
+    };
 
     frontier.push({ startPos, 0, 0 });
     cameFrom[gridPos(startPos)] = startPos;
@@ -104,9 +127,7 @@ std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
     return path;
 }
 
-
-
-
+// Return 2D array with grass
 void World::GenerateWorld()
 {
 	for (int i = 0; i < 64; i++)
@@ -116,10 +137,8 @@ void World::GenerateWorld()
 			map[i][j] = TerrainNode(Vector2{i * 25.0f, j * 25.0f}, TerrainNode::GRASS);
 		}
 	}
-
-    map[0][0].UnClick();
 }
-
+// Generate 2x2 terrain node on random grass node
 void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
 {
     int x = RandomNumber(0, 62);
@@ -157,36 +176,53 @@ void World::UnclickUnusedNodes(TerrainNode node)
 
 void World::WalkingOnNode(TerrainNode* node, Creature& creature, Vector2 target)
 {
+    Vector2 nearest = FindNearestWalkableNode(target);
     if (creature.IsClicked() && node->IsClicked())
-    {
+    {   
         std::cout << "  TYPE:" << node->GetType() << "\n";
         std::vector<Vector2> path;
-        switch (node->GetType())
-        {
-        case TerrainNode::GRASS:
-            path = FindPath(creature.GetPosition(), target);
-            creature.SetPath(path);
-            creature.SetTargetNode(node);
-            break;
 
-        case TerrainNode::FOREST:
-            Vector2 nearest = FindNearestWalkableNode(target);
-            path = FindPath(creature.GetPosition(), nearest);
-            creature.SetPath(path);
-            creature.SetTargetNode(node);
-            creature.SetNearestTraget(nearest);
-            break;
+        //Vector2 nearest = FindNearestWalkableNode(target);
+        path = FindPath(creature.GetPosition(), nearest);
+        creature.SetPath(path);
+        creature.SetTargetNode(node);
+        creature.SetNearestTraget(nearest);
 
-        default:
-            break;
-        }
+
         node->UnClick();
         creature.UnClick();
+        if (creature.GetTargetNode()->GetType() != TerrainNode::GRASS)
+        {
+            creature.Take();
+        }
+
+        return;
     }
+    else
+    {
+        if (creature.IsTaken() && !creature.IsMoving())
+        {
+            switch (creature.GetTargetNode()->GetType())
+            {
+                case TerrainNode::FOREST:
+                    player->AddToWood(15);
+                    creature.Take();
+
+                    break;
+                case TerrainNode::STONE:
+                    player->AddToStone(15);
+                    creature.Take();
+
+                    break;
+            default:
+                break;
+            }
+        }
+    }
+
 }
 
-
-void World::UpdateCreatures(Creature creature)
+void World::AddCreature(Creature creature)
 {
     playerCreatures.push_back(creature);
 }
@@ -241,7 +277,6 @@ Vector2 World::FindNearestWalkableNode(Vector2 startPos)
     return bestPos;
 }
 
-
 void World::Draw()
 {
     BeginMode2D(camera);
@@ -292,7 +327,6 @@ void World::Update()
         }
     }
 }
-
 
 void World::Move()
 {
