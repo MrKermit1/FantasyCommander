@@ -2,15 +2,14 @@
 #include <iostream>
 #include <queue>
 #include "raymath.h"
-Creature::Creature()
-{
-}
 
 Creature::Creature(Vector2 pos, Creature::Profession proffesion, Creature::Race race)
 {
 	position = pos;
 	this->proffesion = proffesion;
 	this->race = race;
+	this->taken = false;
+	type = CreatureType::Player;
 	clicked = false;
 	AssignRace();
 	AssignProffesion();
@@ -28,6 +27,7 @@ Creature::Creature(Vector2 pos, Creature::Profession proffesion, Creature::Race 
 	SetTextureFilter(texture, TEXTURE_FILTER_POINT);
 	SetTextureWrap(texture, TEXTURE_WRAP_CLAMP);
 }
+
 
 bool Creature::IsClicked()
 {
@@ -53,6 +53,7 @@ void Creature::OnClick(Camera2D* camera)
 			&& !(mousePosition.x > position.x + 25)
 			&& mousePosition.y >= position.y
 			&& !(mousePosition.y > position.y + 25)
+			&& type == CreatureType::Player
 	)
 	{
 		clicked = !clicked;
@@ -105,11 +106,28 @@ void Creature::Animate()
 	}
 }
 
+void Creature::Take()
+{
+	this->taken = !taken;
+}
+
+bool Creature::IsTaken() const
+{
+	return taken;
+}
+
+void Creature::SetCreatureType(CreatureType type)
+{
+	this->type = type;
+}
+
 void Creature::UpdateMovement(float deltaTime)
 {
 	if (nearestTarget.x == position.x && nearestTarget.y == position.y)
 	{
 		targetNode->SetType(TerrainNode::GRASS);
+		
+		nearestTarget = { -1, -1 };
 	}
 
 	if (!path.empty())
@@ -168,6 +186,11 @@ void Creature::AssignRace()
 Vector2 Creature::GetPosition()
 {
 	return position;
+}
+
+TerrainNode* Creature::GetTargetNode() const
+{
+	return targetNode;
 }
 
 void Creature::SetPosition(Vector2 pos)

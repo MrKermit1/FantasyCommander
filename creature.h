@@ -12,6 +12,7 @@ public:
 		ORC,
 		DWARF
 	};
+
 	static enum Profession
 	{
 		WARRIOR,
@@ -19,11 +20,17 @@ public:
 		WORKER
 	};
 
-	Creature();
+	static enum CreatureType
+	{
+		Player,
+		CPU
+	};
+
 	Creature(Vector2 pos, Creature::Profession proffesion, Creature::Race race);
 	bool IsClicked();
 	bool IsMoving() const;
 	Vector2 GetPosition();
+	TerrainNode* GetTargetNode() const;
 
 	void Draw();
 	void OnClick(Camera2D* camera);
@@ -34,12 +41,16 @@ public:
 	void SetTargetNode(TerrainNode* node);
 	void UpdateMovement(float deltaTime);
 	void Animate();
+	void Take();
+	bool IsTaken() const;
+	void SetCreatureType(CreatureType type);
 private:
 	int lifePoints;
 	int currentAnimFrame;
 	int frameDelay;
 	int frameCounter;
 	int animFrames ;
+	bool taken;
 	unsigned int nextFrameDataOffset;
 	float speed;
 	bool clicked;
@@ -47,6 +58,7 @@ private:
 	Image imCreatureAnim;
 	Race race;
 	Profession proffesion;
+	CreatureType type;
 	Vector2 position;
 	Vector2 nearestTarget;
 	Texture2D texture;
