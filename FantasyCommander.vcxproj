@@ -131,12 +131,14 @@
     <ClCompile Include="FantasyCommander.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="terrainnode.cpp" />
+    <ClCompile Include="ui.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="creature.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="terrainnode.h" />
+    <ClInclude Include="ui.h" />
     <ClInclude Include="vectorexpansion.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>
@@ -145,12 +147,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\raylib.5.0.0\build\native\raylib.targets" Condition="Exists('packages\raylib.5.0.0\build\native\raylib.targets')" />
+    <Import Project="packages\raylib.5.5.0\build\native\raylib.targets" Condition="Exists('packages\raylib.5.5.0\build\native\raylib.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>Ten projekt zawiera odwołania do pakietów NuGet, których nie ma na tym komputerze. Użyj przywracania pakietów NuGet, aby je pobrać. Aby uzyskać więcej informacji, zobacz http://go.microsoft.com/fwlink/?LinkID=322105. Brakujący plik: {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\raylib.5.0.0\build\native\raylib.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\raylib.5.0.0\build\native\raylib.targets'))" />
+    <Error Condition="!Exists('packages\raylib.5.5.0\build\native\raylib.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\raylib.5.5.0\build\native\raylib.targets'))" />
   </Target>
 </Project>
