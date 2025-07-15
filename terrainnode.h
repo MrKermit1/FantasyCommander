@@ -7,15 +7,18 @@ public:
 	{
 		GRASS,
 		FOREST,
-		STONE
+		STONE,
+		OCCUPIED,
 	};
+
+	static const float NODE_SIZE;
 
 	TerrainNode();
 	TerrainNode(Vector2 pos, TerrainNode::TerrainType type);
 
 	int fCost();
-	bool IsClicked();
-	bool IsWalkable();
+	bool IsClicked() const;
+	bool IsWalkable() const;
 	bool operator==(const TerrainNode& other) const;
 
 	Vector2 OnClick(Camera2D* camera);
@@ -27,8 +30,6 @@ public:
 	void UnClick();
 	void Draw();
 private:
-	int gCost;
-	int hCost;
 	bool clicked;
 	bool walkable;
 

@@ -1,7 +1,13 @@
 #include "terrainnode.h"
 #include <iostream>
+
 TerrainNode::TerrainNode()
 {
+    position = { 0.0f, 0.0f };
+    type = TerrainNode::GRASS;
+    walkable = true;
+    clicked = false;
+	SwitchTexture();
 }
 
 TerrainNode::TerrainNode(Vector2 pos, TerrainNode::TerrainType type)
@@ -9,20 +15,23 @@ TerrainNode::TerrainNode(Vector2 pos, TerrainNode::TerrainType type)
     position = pos;
     this->type = type;
     walkable = false;
+    clicked = false;
     SwitchTexture();
 }
+
+const float TerrainNode::NODE_SIZE = 25.0f;
 
 int TerrainNode::fCost()
 {
     return 0;
 }
 
-bool TerrainNode::IsClicked()
+bool TerrainNode::IsClicked() const
 {
     return clicked;
 }
 
-bool TerrainNode::IsWalkable()
+bool TerrainNode::IsWalkable() const
 {
     return walkable;
 }
@@ -58,9 +67,9 @@ Vector2 TerrainNode::OnClick(Camera2D *camera)
     (
         IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) 
         && mousePosition.x >= position.x
-        && !(mousePosition.x > position.x+25)
+        && !(mousePosition.x > position.x + NODE_SIZE)
         && mousePosition.y >= position.y
-        && !(mousePosition.y > position.y + 25)
+        && !(mousePosition.y > position.y + NODE_SIZE)
     )
     {
         std::cout << "NODE:     x:" << position.x << " y:" << position.y << "\n";
@@ -82,8 +91,8 @@ void TerrainNode::Draw()
     if (clicked)
     {
         //Draw cross
-        DrawLineV(position, {position.x+25.0f, position.y+25.0f }, RED);
-        DrawLine(position.x +25.0f, position.y, position.x, position.y+ 25.0f, RED);
+        DrawLineV(position, { position.x + NODE_SIZE, position.y + NODE_SIZE }, RED);
+        DrawLine(position.x + NODE_SIZE, position.y, position.x, position.y + NODE_SIZE, RED);
     }
 }
 
