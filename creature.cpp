@@ -36,9 +36,10 @@ bool Creature::IsClicked()
 
 void Creature::Draw()
 {	
+	const float radius = 15.0f;
 	if (clicked)
 	{
-		DrawCircle(position.x + 15, position.y + 15, 15.0f, BLUE);
+		DrawCircle(position.x + radius, position.y + radius, radius, BLUE);
 	}
 	DrawTextureV(texture, position, WHITE);
 }
@@ -50,9 +51,9 @@ void Creature::OnClick(Camera2D* camera)
 	(
 			IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
 			&& mousePosition.x >= position.x
-			&& !(mousePosition.x > position.x + 25)
+			&& !(mousePosition.x > position.x + TerrainNode::NODE_SIZE)
 			&& mousePosition.y >= position.y
-			&& !(mousePosition.y > position.y + 25)
+			&& !(mousePosition.y > position.y + TerrainNode::NODE_SIZE)
 			&& type == CreatureType::Player
 	)
 	{
