@@ -27,6 +27,7 @@ World::World()
 
 World::World(Player* player)
 {
+	InitGame();
     map = new TerrainNode * [64];
     for (int i = 0; i < 64; i++)
     {
@@ -42,6 +43,7 @@ World::World(Player* player)
     GenerateWorld();
     GenerateTerrain(TerrainNode::STONE, 30);
     GenerateTerrain(TerrainNode::FOREST, 100);
+
 	this->player = player;
 }
 
@@ -127,6 +129,11 @@ std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
     return path;
 }
 
+Camera2D* World::GetCamera()
+{
+    return &camera;
+}
+
 // Return 2D array with grass
 void World::GenerateWorld()
 {
@@ -178,7 +185,8 @@ void World::WalkingOnNode(TerrainNode* node, Creature& creature, Vector2 target)
 {
     Vector2 nearest = FindNearestWalkableNode(target);
     if (creature.IsClicked() && node->IsClicked())
-    {   
+    {
+        
         std::cout << "  TYPE:" << node->GetType() << "\n";
         std::vector<Vector2> path;
 
@@ -190,6 +198,7 @@ void World::WalkingOnNode(TerrainNode* node, Creature& creature, Vector2 target)
 
 
         node->UnClick();
+		
         creature.UnClick();
         if (creature.GetTargetNode()->GetType() != TerrainNode::GRASS)
         {
@@ -222,9 +231,21 @@ void World::WalkingOnNode(TerrainNode* node, Creature& creature, Vector2 target)
 
 }
 
+void World::InitGame()
+{
+    const int SCREEN_WIDTH = 1000;
+    const int SCREEN_HEIGHT = 1000;
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Fantasy Commander");
+}
+
 void World::AddCreature(Creature creature)
 {
     playerCreatures.push_back(creature);
+}
+
+void World::AddBuilding(Building building)
+{
+    playerBuildings.push_back(building);
 }
 
 int World::RandomNumber(int min, int max)
@@ -245,6 +266,19 @@ bool World::CheckTerrain(int x, int y, TerrainNode::TerrainType type)
         map[x + 1][y + 1].GetType() == type;
 }
 
+bool World::CheckCreatureNodePosition(Vector2 pos)
+{
+    for (Creature& c : playerCreatures)
+    {
+        if (c.GetPosition().x == pos.x && c.GetPosition().y == pos.y)
+        {
+            return true;
+		}
+    }
+    
+	return false;
+}
+
 Vector2 World::FindNearestWalkableNode(Vector2 startPos)
 {
     Vector2 bestPos = startPos;
@@ -259,7 +293,7 @@ Vector2 World::FindNearestWalkableNode(Vector2 startPos)
 
             if (newX >= 0 && newX < 64 && newY >= 0 && newY < 48)
             {
-                if (map[newX][newY].GetType() == 0)
+                if (map[newX][newY].GetType() == 0 && !CheckCreatureNodePosition(map[newX][newY].GetPosition()))
                 {
                     float distance = sqrt(pow(startPos.x - map[newX][newY].GetPosition().x, 2) + 
                                      pow(startPos.y - map[newX][newY].GetPosition().y, 2));
@@ -288,6 +322,11 @@ void World::Draw()
         }
     }
 
+    for (auto& b : playerBuildings)
+    {
+        b.Draw(&camera);
+    }
+
     for (auto& c : playerCreatures)
     {
         c.Draw();
@@ -304,20 +343,16 @@ void World::Update()
     {
         for (int j = 0; j < 48; j++)
         {
-            Vector2 target = map[i][j].OnClick(&camera);
-            if (map[i][j].IsClicked())
-            {
-                UnclickUnusedNodes(map[i][j]);
-            }
+            currentTarget = map[i][j].OnClick(&camera);
 
-            for (Creature& c : playerCreatures)
+            for (Creature& c : playerCreatures)    
             {
-                WalkingOnNode(&map[i][j], c, target);
+                WalkingOnNode(&map[i][j], c, currentTarget);
             }
         }
     }
 
-    for (auto& c : playerCreatures)
+    for (Creature& c : playerCreatures)
     {
         c.OnClick(&camera);
         c.UpdateMovement(deltaTime);
