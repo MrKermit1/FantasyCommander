@@ -1,16 +1,15 @@
 #pragma once
-#include "player.h"
-
 class UI
 {
 public:
 	UI(int screenWidth, int screenHeight);
 
-	void DrawResources(Player* player);
+	void DrawResources();
 	void DrawShop();
 
 private:
 	int screenWidth;
 	int screenHeight;
+	void DrawButton(int posx, int posy, const char* text, int width, int height, void(*func)());
 };
 
