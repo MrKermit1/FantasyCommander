@@ -127,15 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="building.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="FantasyCommander.cpp" />
+    <ClCompile Include="globals.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="terrainnode.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="building.h" />
     <ClInclude Include="creature.h" />
+    <ClInclude Include="globals.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="terrainnode.h" />
     <ClInclude Include="ui.h" />
