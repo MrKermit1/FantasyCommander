@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include "raylib.h"
 class Building
@@ -12,8 +11,9 @@ public:
 	};
 
 	Building(Vector2 pos, BuildingType type);
-	void Draw(Camera2D* camera);
+	void Draw();
 	void Build();
+	void Update();
 private: 
 	bool clicked;
 	bool buildMode;

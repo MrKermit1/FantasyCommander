@@ -1,8 +1,8 @@
 #include "world.h"
 #include <random>
 #include <iostream>
-#include "creature.h"
-#include "player.h"
+#include "../entities/creatures/creature.h"
+#include "../player/player.h"
 #include <queue>
 #include <map>
 
@@ -324,7 +324,7 @@ void World::Draw()
 
     for (auto& b : playerBuildings)
     {
-        b.Draw(&camera);
+        b.Draw();
     }
 
     for (auto& c : playerCreatures)
@@ -360,6 +360,11 @@ void World::Update()
         {
             c.Animate();
         }
+    }
+
+    for (Building& b : playerBuildings)
+    {
+		b.Update();
     }
 }
 

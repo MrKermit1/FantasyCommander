@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include <string>
 #include <vector>
-#include "terrainnode.h"
+#include "../../world/terrainnode.h"
 
 class Creature
 {

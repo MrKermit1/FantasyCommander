@@ -15,54 +15,54 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FantasyCommander.cpp">
+    <ClCompile Include="src\FantasyCommander.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="terrainnode.cpp">
+    <ClCompile Include="src\world\terrainnode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="world.cpp">
+    <ClCompile Include="src\world\world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="creature.cpp">
+    <ClCompile Include="src\entities\creatures\creature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
+    <ClCompile Include="src\player\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ui.cpp">
+    <ClCompile Include="src\player\ui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="building.cpp">
+    <ClCompile Include="src\entities\buildings\building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="globals.cpp">
+    <ClCompile Include="src\globals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="terrainnode.h">
+    <ClInclude Include="src\world\terrainnode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vectorexpansion.h">
+    <ClInclude Include="src\vectorexpansion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="world.h">
+    <ClInclude Include="src\world\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="creature.h">
+    <ClInclude Include="src\entities\creatures\creature.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
+    <ClInclude Include="src\player\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ui.h">
+    <ClInclude Include="src\player\ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="building.h">
+    <ClInclude Include="src\entities\buildings\building.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="globals.h">
+    <ClInclude Include="src\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

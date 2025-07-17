@@ -1,8 +1,8 @@
 #include "ui.h"
 #include <string>
 #include "raylib.h"
-#include "globals.h"
-#include "building.h"
+#include "../globals.h"
+#include "../entities/buildings/building.h"
 UI::UI(int screenWidth, int screenHeight)
 {
     this->screenHeight = screenHeight;

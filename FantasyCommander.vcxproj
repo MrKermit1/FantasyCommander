@@ -127,24 +127,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="building.cpp" />
-    <ClCompile Include="creature.cpp" />
-    <ClCompile Include="FantasyCommander.cpp" />
-    <ClCompile Include="globals.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="terrainnode.cpp" />
-    <ClCompile Include="ui.cpp" />
-    <ClCompile Include="world.cpp" />
+    <ClCompile Include="src\entities\buildings\building.cpp" />
+    <ClCompile Include="src\entities\creatures\creature.cpp" />
+    <ClCompile Include="src\FantasyCommander.cpp" />
+    <ClCompile Include="src\globals.cpp" />
+    <ClCompile Include="src\player\player.cpp" />
+    <ClCompile Include="src\world\terrainnode.cpp" />
+    <ClCompile Include="src\player\ui.cpp" />
+    <ClCompile Include="src\world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="building.h" />
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="globals.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="terrainnode.h" />
-    <ClInclude Include="ui.h" />
-    <ClInclude Include="vectorexpansion.h" />
-    <ClInclude Include="world.h" />
+    <ClInclude Include="src\entities\buildings\building.h" />
+    <ClInclude Include="src\entities\creatures\creature.h" />
+    <ClInclude Include="src\globals.h" />
+    <ClInclude Include="src\player\player.h" />
+    <ClInclude Include="src\world\terrainnode.h" />
+    <ClInclude Include="src\player\ui.h" />
+    <ClInclude Include="src\vectorexpansion.h" />
+    <ClInclude Include="src\world\world.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

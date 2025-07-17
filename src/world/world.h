@@ -1,9 +1,9 @@
 #pragma once
 #include "terrainnode.h"
 #include "raylib.h"
-#include "creature.h"
-#include "player.h"
-#include "building.h"
+#include "../entities/creatures/creature.h"
+#include "../player/player.h"
+#include "../entities/buildings/building.h"
 #include <vector>
 class World
 {

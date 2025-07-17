@@ -1,5 +1,5 @@
 #include "building.h"
-
+#include "../../globals.h"
 Building::Building(Vector2 pos, BuildingType type)
 {
 	position = pos;
@@ -13,11 +13,11 @@ void Building::Build()
 	buildMode = true;
 }
 
-void Building::Draw(Camera2D* camera)
+void Building::Draw()
 {
 	if (buildMode)
 	{
-		Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *camera);
+		Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *world.GetCamera());
 		mousePosition.x -= texture.width / 2;
 		mousePosition.y -= texture.height / 2;
 		DrawTextureV(texture, mousePosition, WHITE);
@@ -25,6 +25,18 @@ void Building::Draw(Camera2D* camera)
 	else
 	{
 		DrawTextureV(texture, position, WHITE);
+	}
+}
+
+void Building::Update()
+{
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && buildMode)
+	{
+		Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *world.GetCamera());
+		mousePosition.x -= texture.width / 2;
+		mousePosition.y -= texture.height / 2;
+		position = mousePosition;
+		buildMode = false;
 	}
 }
 

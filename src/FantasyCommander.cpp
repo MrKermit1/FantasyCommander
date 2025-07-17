@@ -3,7 +3,7 @@
 #include <string>
 #include "raylib.h"
 #include "globals.h"
-#include "ui.h"
+#include "player/ui.h"
 const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 1000;
 
@@ -30,5 +30,4 @@ int main()
 
         EndDrawing();
     }
-
 }
