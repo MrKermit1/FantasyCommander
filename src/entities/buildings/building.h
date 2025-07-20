@@ -11,6 +11,9 @@ public:
 	};
 
 	Building(Vector2 pos, BuildingType type);
+
+	bool IsInBuildMode();
+
 	void Draw();
 	void Build();
 	void Update();

@@ -8,6 +8,11 @@ Building::Building(Vector2 pos, BuildingType type)
 	SwitchTexture();
 }
 
+bool Building::IsInBuildMode()
+{
+	return buildMode;
+}
+
 void Building::Build()
 {
 	buildMode = true;
@@ -30,7 +35,7 @@ void Building::Draw()
 
 void Building::Update()
 {
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && buildMode)
+	if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) && buildMode)
 	{
 		Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *world.GetCamera());
 		mousePosition.x -= texture.width / 2;
