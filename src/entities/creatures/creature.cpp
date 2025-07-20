@@ -1,10 +1,12 @@
 #include "creature.h"
 #include <iostream>
 #include <queue>
+#include "../../globals.h"
 #include "raymath.h"
 
 Creature::Creature(Vector2 pos, Creature::Profession proffesion, Creature::Race race)
 {
+	id = world.GetCreaturesQuanity();
 	position = pos;
 	this->proffesion = proffesion;
 	this->race = race;
@@ -27,7 +29,6 @@ Creature::Creature(Vector2 pos, Creature::Profession proffesion, Creature::Race 
 	SetTextureFilter(texture, TEXTURE_FILTER_POINT);
 	SetTextureWrap(texture, TEXTURE_WRAP_CLAMP);
 }
-
 
 bool Creature::IsClicked()
 {
@@ -124,6 +125,12 @@ void Creature::SetCreatureType(CreatureType type)
 
 void Creature::UpdateMovement(float deltaTime)
 {
+	if (world.CheckCreatureOnPosition(position, id))
+	{
+		Vector2 newPosition = world.FindNearestWalkableNode(position);
+		position = newPosition;
+	}
+
 	if (nearestTarget.x == position.x && nearestTarget.y == position.y)
 	{
 		targetNode->SetType(TerrainNode::GRASS);
@@ -192,6 +199,11 @@ Vector2 Creature::GetPosition()
 TerrainNode* Creature::GetTargetNode() const
 {
 	return targetNode;
+}
+
+int Creature::GetId()
+{
+	return id;
 }
 
 void Creature::SetPosition(Vector2 pos)

@@ -31,7 +31,7 @@ public:
 	bool IsMoving() const;
 	Vector2 GetPosition();
 	TerrainNode* GetTargetNode() const;
-
+	int GetId();
 	void Draw();
 	void OnClick(Camera2D* camera);
 	void UnClick();
@@ -45,6 +45,7 @@ public:
 	bool IsTaken() const;
 	void SetCreatureType(CreatureType type);
 private:
+	int id;
 	int lifePoints;
 	int currentAnimFrame;
 	int frameDelay;
