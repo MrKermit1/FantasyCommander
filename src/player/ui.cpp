@@ -29,7 +29,11 @@ void UI::DrawShop()
 	const int margin = 10;
     DrawRectangle(0, screenHeight - 100, screenWidth, 100, GRAY);
 	DrawButton(margin, screenHeight - 60, "Base", 200, 30, []() {
-        world.AddBuilding(Building({0, 0}, Building::BASE));
+        if (!world.IsAnyBuildingInBuildMode())
+        {
+            world.AddBuilding(Building({ 0, 0 }, Building::BASE));
+            std::cout << "Dodano budynek\n";
+        }
 	});
 }
 
