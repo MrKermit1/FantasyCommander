@@ -50,8 +50,11 @@ TerrainNode::TerrainType TerrainNode::GetType()
 
 void TerrainNode::SetType(TerrainType type)
 {
-    this->type = type;
-    SwitchTexture();
+    if (this != nullptr)
+    {
+        this->type = type;
+        SwitchTexture();
+    }
 }
 
 void TerrainNode::SetPosition(Vector2 pos)
