@@ -134,6 +134,20 @@ Camera2D* World::GetCamera()
     return &camera;
 }
 
+bool World::IsAnyBuildingInBuildMode()
+{
+    for (Building& b : playerBuildings)
+    {
+        std::cout << "status: " << b.IsInBuildMode() << "\n";
+        if (b.IsInBuildMode())
+        {
+            return true;
+        }
+    }
+   
+    return false;
+}
+
 // Return 2D array with grass
 void World::GenerateWorld()
 {
@@ -266,7 +280,7 @@ bool World::CheckTerrain(int x, int y, TerrainNode::TerrainType type)
         map[x + 1][y + 1].GetType() == type;
 }
 
-bool World::CheckCreatureNodePosition(Vector2 pos)
+bool World::CheckCreatureOnPosition(Vector2 pos)
 {
     for (Creature& c : playerCreatures)
     {
@@ -277,6 +291,19 @@ bool World::CheckCreatureNodePosition(Vector2 pos)
     }
     
 	return false;
+}
+
+bool World::CheckCreatureOnPosition(Vector2 pos, int id)
+{
+    for (Creature& c : playerCreatures)
+    {
+        if (c.GetPosition().x == pos.x && c.GetPosition().y == pos.y && c.GetId() != id)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 Vector2 World::FindNearestWalkableNode(Vector2 startPos)
@@ -293,7 +320,7 @@ Vector2 World::FindNearestWalkableNode(Vector2 startPos)
 
             if (newX >= 0 && newX < 64 && newY >= 0 && newY < 48)
             {
-                if (map[newX][newY].GetType() == 0 && !CheckCreatureNodePosition(map[newX][newY].GetPosition()))
+                if (map[newX][newY].GetType() == 0 && !CheckCreatureOnPosition(map[newX][newY].GetPosition()))
                 {
                     float distance = sqrt(pow(startPos.x - map[newX][newY].GetPosition().x, 2) + 
                                      pow(startPos.y - map[newX][newY].GetPosition().y, 2));
@@ -309,6 +336,11 @@ Vector2 World::FindNearestWalkableNode(Vector2 startPos)
     }
 
     return bestPos;
+}
+
+int World::GetCreaturesQuanity()
+{
+    return playerCreatures.size();
 }
 
 void World::Draw()
