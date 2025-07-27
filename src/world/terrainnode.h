@@ -16,7 +16,6 @@ public:
 	TerrainNode();
 	TerrainNode(Vector2 pos, TerrainNode::TerrainType type);
 
-	int fCost();
 	bool IsClicked() const;
 	bool IsWalkable() const;
 	bool operator==(const TerrainNode& other) const;

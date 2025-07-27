@@ -47,16 +47,8 @@ void Creature::Draw()
 
 void Creature::OnClick(Camera2D* camera)
 {
-	Vector2 mousePosition = GetScreenToWorld2D(GetMousePosition(), *camera);
-	if
-	(
-			IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
-			&& mousePosition.x >= position.x
-			&& !(mousePosition.x > position.x + TerrainNode::NODE_SIZE)
-			&& mousePosition.y >= position.y
-			&& !(mousePosition.y > position.y + TerrainNode::NODE_SIZE)
-			&& type == CreatureType::Player
-	)
+	Vector2 nodeSize = { TerrainNode::NODE_SIZE, TerrainNode::NODE_SIZE, };
+	if (IsMouseOnEntity(position, nodeSize))
 	{
 		clicked = !clicked;
 		std::cout << clicked << "\n";

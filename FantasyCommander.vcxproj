@@ -143,7 +143,6 @@
     <ClInclude Include="src\player\player.h" />
     <ClInclude Include="src\world\terrainnode.h" />
     <ClInclude Include="src\player\ui.h" />
-    <ClInclude Include="src\vectorexpansion.h" />
     <ClInclude Include="src\world\world.h" />
   </ItemGroup>
   <ItemGroup>

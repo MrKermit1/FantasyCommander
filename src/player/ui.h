@@ -1,4 +1,7 @@
 #pragma once
+
+#include "raylib.h"
+
 class UI
 {
 public:
@@ -10,6 +13,6 @@ public:
 private:
 	int screenWidth;
 	int screenHeight;
-	void DrawButton(int posx, int posy, const char* text, int width, int height, void(*func)());
+	void DrawButton(Vector2 position, const char* text, Vector2 size, int fontSize, void(*func)());
 };
 

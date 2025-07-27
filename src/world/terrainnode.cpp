@@ -10,6 +10,8 @@ TerrainNode::TerrainNode()
 	SwitchTexture();
 }
 
+//  ----------------------------------------------------------------
+
 TerrainNode::TerrainNode(Vector2 pos, TerrainNode::TerrainType type)
 {
     position = pos;
@@ -19,22 +21,25 @@ TerrainNode::TerrainNode(Vector2 pos, TerrainNode::TerrainType type)
     SwitchTexture();
 }
 
+//  ----------------------------------------------------------------
+
 const float TerrainNode::NODE_SIZE = 25.0f;
 
-int TerrainNode::fCost()
-{
-    return 0;
-}
+//  ----------------------------------------------------------------
 
 bool TerrainNode::IsClicked() const
 {
     return clicked;
 }
 
+//  ----------------------------------------------------------------
+
 bool TerrainNode::IsWalkable() const
 {
     return walkable;
 }
+
+//  ----------------------------------------------------------------
 
 bool TerrainNode::operator==(const TerrainNode& other) const
 {
@@ -43,10 +48,14 @@ bool TerrainNode::operator==(const TerrainNode& other) const
         this->type == other.type;
 }
 
+//  ----------------------------------------------------------------
+
 TerrainNode::TerrainType TerrainNode::GetType()
 {
     return this->type;
 }
+
+//  ----------------------------------------------------------------
 
 void TerrainNode::SetType(TerrainType type)
 {
@@ -57,10 +66,14 @@ void TerrainNode::SetType(TerrainType type)
     }
 }
 
+//  ----------------------------------------------------------------
+
 void TerrainNode::SetPosition(Vector2 pos)
 {
     position = pos;
 }
+
+//  ----------------------------------------------------------------
 
 Vector2 TerrainNode::OnClick(Camera2D *camera)
 {
@@ -83,10 +96,14 @@ Vector2 TerrainNode::OnClick(Camera2D *camera)
     return position;
 }
 
+//  ----------------------------------------------------------------
+
 void TerrainNode::UnClick()
 {
     clicked = false;
 }
+
+//  ----------------------------------------------------------------
 
 void TerrainNode::Draw()
 {
@@ -98,6 +115,8 @@ void TerrainNode::Draw()
         DrawLine(position.x + NODE_SIZE, position.y, position.x, position.y + NODE_SIZE, RED);
     }
 }
+
+//  ----------------------------------------------------------------
 
 void TerrainNode::SwitchTexture()
 {
@@ -118,6 +137,8 @@ void TerrainNode::SwitchTexture()
         break;
     }
 }
+
+//  ----------------------------------------------------------------
 
 Vector2 TerrainNode::GetPosition()
 {

@@ -25,6 +25,8 @@ World::World()
     GenerateTerrain(TerrainNode::FOREST ,100);
 }
 
+//  ----------------------------------------------------------------
+
 World::World(Player* player)
 {
 	InitGame();
@@ -46,6 +48,8 @@ World::World(Player* player)
 
 	this->player = player;
 }
+
+//  ----------------------------------------------------------------
 
 std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
 {
@@ -129,10 +133,14 @@ std::vector<Vector2> World::FindPath(Vector2 startPos, Vector2 targetPos)
     return path;
 }
 
+//  ----------------------------------------------------------------
+
 Camera2D* World::GetCamera()
 {
     return &camera;
 }
+
+//  ----------------------------------------------------------------
 
 bool World::IsAnyBuildingInBuildMode()
 {
@@ -148,7 +156,8 @@ bool World::IsAnyBuildingInBuildMode()
     return false;
 }
 
-// Return 2D array with grass
+//  ----------------------------------------------------------------
+
 void World::GenerateWorld()
 {
 	for (int i = 0; i < 64; i++)
@@ -159,7 +168,9 @@ void World::GenerateWorld()
 		}
 	}
 }
-// Generate 2x2 terrain node on random grass node
+
+//  ----------------------------------------------------------------
+
 void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
 {
     int x = RandomNumber(0, 62);
@@ -181,6 +192,8 @@ void World::GenerateTerrain(TerrainNode::TerrainType type, int ammount)
     }
 }
 
+//  ----------------------------------------------------------------
+
 void World::UnclickUnusedNodes(TerrainNode node)
 {
     for (int i = 0; i < 64; i++)
@@ -194,6 +207,8 @@ void World::UnclickUnusedNodes(TerrainNode node)
         }
     }
 }
+
+//  ----------------------------------------------------------------
 
 void World::WalkingOnNode(TerrainNode* node, Creature& creature, Vector2 target)
 {
@@ -245,6 +260,8 @@ void World::WalkingOnNode(TerrainNode* node, Creature& creature, Vector2 target)
 
 }
 
+//  ----------------------------------------------------------------
+
 void World::InitGame()
 {
     const int SCREEN_WIDTH = 1000;
@@ -252,15 +269,21 @@ void World::InitGame()
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Fantasy Commander");
 }
 
+//  ----------------------------------------------------------------
+
 void World::AddCreature(Creature creature)
 {
     playerCreatures.push_back(creature);
 }
 
+//  ----------------------------------------------------------------
+
 void World::AddBuilding(Building building)
 {
     playerBuildings.push_back(building);
 }
+
+//  ----------------------------------------------------------------
 
 int World::RandomNumber(int min, int max)
 {
@@ -271,6 +294,8 @@ int World::RandomNumber(int min, int max)
     return dist6(rng);
 }
 
+//  ----------------------------------------------------------------
+
 bool World::CheckTerrain(int x, int y, TerrainNode::TerrainType type)
 {
     return
@@ -279,6 +304,8 @@ bool World::CheckTerrain(int x, int y, TerrainNode::TerrainType type)
         map[x][y + 1].GetType() == type ||
         map[x + 1][y + 1].GetType() == type;
 }
+
+//  ----------------------------------------------------------------
 
 bool World::CheckCreatureOnPosition(Vector2 pos)
 {
@@ -293,6 +320,8 @@ bool World::CheckCreatureOnPosition(Vector2 pos)
 	return false;
 }
 
+//  ----------------------------------------------------------------
+
 bool World::CheckCreatureOnPosition(Vector2 pos, int id)
 {
     for (Creature& c : playerCreatures)
@@ -305,6 +334,8 @@ bool World::CheckCreatureOnPosition(Vector2 pos, int id)
 
     return false;
 }
+
+//  ----------------------------------------------------------------
 
 Vector2 World::FindNearestWalkableNode(Vector2 startPos)
 {
@@ -338,10 +369,14 @@ Vector2 World::FindNearestWalkableNode(Vector2 startPos)
     return bestPos;
 }
 
+//  ----------------------------------------------------------------
+
 int World::GetCreaturesQuanity()
 {
     return playerCreatures.size();
 }
+
+//  ----------------------------------------------------------------
 
 void World::Draw()
 {
@@ -366,6 +401,8 @@ void World::Draw()
 
     EndMode2D();
 }
+
+//  ----------------------------------------------------------------
 
 void World::Update()
 {
@@ -399,6 +436,8 @@ void World::Update()
 		b.Update();
     }
 }
+
+//  ----------------------------------------------------------------
 
 void World::Move()
 {

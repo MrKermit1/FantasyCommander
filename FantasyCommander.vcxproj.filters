@@ -44,9 +44,6 @@
     <ClInclude Include="src\world\terrainnode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\vectorexpansion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\world\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
